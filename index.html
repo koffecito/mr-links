@@ -170,6 +170,7 @@
     margin-left: 20px;
   }
   .sublink-row{
+    position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -201,6 +202,20 @@
   .sublink-icon img{ width: 100%; height: 100%; object-fit: cover; }
   .sublink-icon svg{ width: 17px; height: 17px; stroke: var(--text-dim); }
   .sublink-title{ font-size: 14px; font-weight: 500; }
+  .sublink-badge{
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  }
 
   .disclaimer{
     display: flex;
@@ -289,6 +304,9 @@
       game: 'Игра',
       community: 'Сообщество',
       mergeAccounts: 'Объединение аккаунтов',
+      channel: 'Канал',
+      group: 'Группа',
+      forum: 'Форум',
       disclaimer: 'Принадлежит компании Meta, которая признана экстремистской организацией и запрещена на территории РФ'
     },
 
@@ -297,6 +315,9 @@
       game: 'Game',
       community: 'Community',
       mergeAccounts: 'Account Merging',
+      channel: 'Channel',
+      group: 'Group',
+      forum: 'Forum',
       disclaimer: 'Belongs to Meta, which is recognized as an extremist organization and banned in the Russian Federation'
     }
   };
@@ -332,10 +353,25 @@
           expandable: true,
           id: "telegram-group",
           sublinks: [
-            { title: "Magic Rampage", href: "https://t.me/AssanteGames", icon: "gamesite" },
-            { title: "Magic Rampage Community", href: "https://t.me/AssanteGamesChat", icon: "mrc-community" },
-            { title: "MRC Forum", href: "https://t.me/MRCForum", icon: "mrc-forum" }
-          ]
+  {
+    title: "Magic Rampage",
+    href: "https://t.me/AssanteGames",
+    icon: "gamesite",
+    badge: t.channel
+  },
+  {
+    title: "Magic Rampage Community",
+    href: "https://t.me/AssanteGamesChat",
+    icon: "mrc-community",
+    badge: t.group
+  },
+  {
+    title: "MRC Forum",
+    href: "https://t.me/MRCForum",
+    icon: "mrc-forum",
+    badge: t.forum
+  }
+]
         },
         { title: "Discord", href: "https://discord.gg/magic-rampage-community-480454484711964672", icon: "discord" },
         { title: "VK", href: "https://vk.com/asantee_vk", icon: "vk" },
@@ -355,12 +391,13 @@
   }
 
   function renderSublink(item){
-    return `
-      <a class="sublink-row" href="${item.href}" target="_blank" rel="noopener">
-        <div class="sublink-icon">${iconMarkup(item.icon)}</div>
-        <div class="sublink-title">${item.title}</div>
-      </a>
-    `;
+  return `
+    <a class="sublink-row" href="${item.href}" target="_blank" rel="noopener">
+      <div class="sublink-icon">${iconMarkup(item.icon)}</div>
+      <div class="sublink-title">${item.title}</div>
+      ${item.badge ? `<div class="sublink-badge">${item.badge}</div>` : ''}
+    </a>
+  `;
   }
 
   function renderExpandable(item){
